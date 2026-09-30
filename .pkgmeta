@@ -1,5 +1,5 @@
 # BigWigs Packager, siehe https://github.com/BigWigsMods/packager/wiki/Preparing-the-PackageMeta-File
-package-as: KickAlert
+package-as: KickCall
 
 # Quellen wie im Referenzprojekt VoidAlert (dort im Spiel getestet).
 # Kein AceDBOptions-3.0: keine Profilseite (SPEC 5 und 7).

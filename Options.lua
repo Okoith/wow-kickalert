@@ -2,7 +2,7 @@ local ADDON_NAME, ns = ...
 local L = ns.L
 
 -- Einstellungsmenü (SPEC 5) mit AceConfig-3.0 / AceConfigDialog-3.0, Aufbau aus VoidAlert.
--- Eingetragen unter Einstellungen > AddOns > KickAlert; /kickalert öffnet dasselbe Menü als
+-- Eingetragen unter Einstellungen > AddOns > KickCall; /kickcall öffnet dasselbe Menü als
 -- eigenständiges AceConfigDialog-Fenster. Keine Profilseite.
 
 local Options = {}
@@ -87,7 +87,7 @@ local function buildOptions()
 
   return {
     type = "group",
-    name = "KickAlert",
+    name = "KickCall",
     args = {
       -- SPEC 3.1: klar sagen, dass jeder gegnerische Zauber den Sound auslöst
       note = {
@@ -239,7 +239,7 @@ function Options:Init()
   end
   local ok, err = pcall(function()
     AceConfig:RegisterOptionsTable(ADDON_NAME, buildOptions())
-    local _, categoryID = AceConfigDialog:AddToBlizOptions(ADDON_NAME, "KickAlert")
+    local _, categoryID = AceConfigDialog:AddToBlizOptions(ADDON_NAME, "KickCall")
     self.categoryID = categoryID
   end)
   if not ok then ns.Debug:Error("Options:Init", err) end

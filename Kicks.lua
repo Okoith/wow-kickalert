@@ -79,7 +79,7 @@ function Kicks:Update(why)
   return changed
 end
 
--- Anzeigetext für Menü und /kickalert status, z. B. "Zurechtweisung (96231)"
+-- Anzeigetext für Menü und /kickcall status, z. B. "Zurechtweisung (96231)"
 function Kicks:Describe()
   if #self.known == 0 then return nil end
   local parts = {}

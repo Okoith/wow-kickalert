@@ -4,7 +4,7 @@ local L = ns.L
 -- Soundquellen (SPEC 4) in einer gemeinsamen Liste und geschütztes Abspielen. Aus VoidAlert.
 -- Gespeichert wird nur ein Schlüssel (Text), nie ein geheimer Wert:
 --   "addon:<id>"  mitgelieferte Sprachansagen in sounds/
---   "custom:<n>"  eigene Sounds in Interface\AddOns\KickAlert_Sounds\sound<n>.ogg
+--   "custom:<n>"  eigene Sounds in Interface\AddOns\KickCall_Sounds\sound<n>.ogg
 --   "kit:<NAME>"  WoW-Sound über SOUNDKIT.<NAME>
 --   "lsm:<name>"  bei LibSharedMedia-3.0 registrierter Sound
 
@@ -17,17 +17,17 @@ Sounds.LSM = LSM
 local issecret = issecretvalue or function() return false end
 
 local ADDON_PATH = "Interface\\AddOns\\" .. ADDON_NAME .. "\\sounds\\"
-local CUSTOM_FOLDER = "KickAlert_Sounds"
+local CUSTOM_FOLDER = "KickCall_Sounds"
 local CUSTOM_PATH = "Interface\\AddOns\\" .. CUSTOM_FOLDER .. "\\"
 Sounds.CUSTOM_FOLDER = CUSTOM_PATH
 Sounds.CUSTOM_COUNT = 5
 
 -- Mitgelieferte Sprachansagen. lsm = Name, unter dem der Sound bei LibSharedMedia registriert wird.
 Sounds.BUNDLED = {
-  { id = "cast_en", file = "cast_en.ogg", label = "SOUND_CAST_EN", lsm = "KickAlert: Cast (EN)" },
-  { id = "cast_de", file = "cast_de.ogg", label = "SOUND_CAST_DE", lsm = "KickAlert: Cast (DE)" },
-  { id = "kick_en", file = "kick_en.ogg", label = "SOUND_KICK_EN", lsm = "KickAlert: Kick (EN)" },
-  { id = "kick_de", file = "kick_de.ogg", label = "SOUND_KICK_DE", lsm = "KickAlert: Kick (DE)" },
+  { id = "cast_en", file = "cast_en.ogg", label = "SOUND_CAST_EN", lsm = "KickCall: Cast (EN)" },
+  { id = "cast_de", file = "cast_de.ogg", label = "SOUND_CAST_DE", lsm = "KickCall: Cast (DE)" },
+  { id = "kick_en", file = "kick_en.ogg", label = "SOUND_KICK_EN", lsm = "KickCall: Kick (EN)" },
+  { id = "kick_de", file = "kick_de.ogg", label = "SOUND_KICK_DE", lsm = "KickCall: Kick (DE)" },
 }
 local bundledByID, ownLSMNames = {}, {}
 for _, s in ipairs(Sounds.BUNDLED) do

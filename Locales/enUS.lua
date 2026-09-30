@@ -5,8 +5,8 @@ local _, ns = ...
 local L = setmetatable({}, { __index = function(_, key) return key end })
 ns.L = L
 
-L["LOADED"] = "Version %s loaded. Type /kickalert help for commands."
-L["UNKNOWN_COMMAND"] = "Unknown command. Type /kickalert help for commands."
+L["LOADED"] = "Version %s loaded. Type /kickcall help for commands."
+L["UNKNOWN_COMMAND"] = "Unknown command. Type /kickcall help for commands."
 L["ON"] = "on"
 L["OFF"] = "off"
 
@@ -14,11 +14,11 @@ L["ALERT_cast"] = "Enemy starts casting"
 L["ALERT_success"] = "Interrupt successful"
 
 L["HELP_HEADER"] = "Commands:"
-L["HELP_OPEN"] = "/kickalert - open the settings"
-L["HELP_HELP"] = "/kickalert help - list the commands"
-L["HELP_TEST"] = "/kickalert test [cast|success] - play both sounds one after the other (or one)"
-L["HELP_STATUS"] = "/kickalert status - show your interrupt and the current settings"
-L["HELP_DEBUG"] = "/kickalert debug on|off|clear|status - debug log"
+L["HELP_OPEN"] = "/kickcall (or /kc) - open the settings"
+L["HELP_HELP"] = "/kickcall help - list the commands"
+L["HELP_TEST"] = "/kickcall test [cast|success] - play both sounds one after the other (or one)"
+L["HELP_STATUS"] = "/kickcall status - show your interrupt and the current settings"
+L["HELP_DEBUG"] = "/kickcall debug on|off|clear|status - debug log"
 
 L["STATUS_HEADER"] = "Version %s"
 L["STATUS_KICK"] = "Your interrupt: %s"
@@ -30,10 +30,10 @@ L["STATUS_OPTIONS"] = "Channel: %s, minimum gap: %.1f s, only in combat: %s, onl
 L["TEST_PLAYING"] = "Test: %s - %s"
 
 -- Soundquellen (SPEC 4)
-L["SOUND_CAST_EN"] = "KickAlert: Cast (English)"
-L["SOUND_CAST_DE"] = "KickAlert: Cast (German)"
-L["SOUND_KICK_EN"] = "KickAlert: Kick (English)"
-L["SOUND_KICK_DE"] = "KickAlert: Kick (German)"
+L["SOUND_CAST_EN"] = "KickCall: Cast (English)"
+L["SOUND_CAST_DE"] = "KickCall: Cast (German)"
+L["SOUND_KICK_EN"] = "KickCall: Kick (English)"
+L["SOUND_KICK_DE"] = "KickCall: Kick (German)"
 L["SOUND_CUSTOM"] = "Custom: sound%d.ogg"
 L["SOUND_KIT"] = "WoW: %s"
 L["SOUND_LSM"] = "LSM: %s"
@@ -81,12 +81,12 @@ L["OPT_COMBAT_ONLY_DESC"] = "Sounds are only played while you are in combat. The
 L["OPT_INSTANCE_ONLY"] = "Only in instances"
 L["OPT_INSTANCE_ONLY_DESC"] = "Sounds are only played inside instances, for example dungeons and raids. The test buttons always play."
 L["OPT_CHAT"] = "Chat messages"
-L["OPT_CHAT_DESC"] = "Shows the \"loaded\" message on login and a message when testing. Replies to /kickalert commands and error hints are always shown."
+L["OPT_CHAT_DESC"] = "Shows the \"loaded\" message on login and a message when testing. Replies to /kickcall commands and error hints are always shown."
 L["OPT_TEST_BOTH"] = "Test both"
 L["OPT_CUSTOM"] = "Custom sounds"
-L["OPT_CUSTOM_NOTE"] = "Put your own files as sound1.ogg to sound5.ogg in\n|cffffd100%s|r\nThis folder is kept when KickAlert is updated. After adding new files, restart WoW completely: /reload does not detect new files."
+L["OPT_CUSTOM_NOTE"] = "Put your own files as sound1.ogg to sound5.ogg in\n|cffffd100%s|r\nThis folder is kept when KickCall is updated. After adding new files, restart WoW completely: /reload does not detect new files."
 L["OPT_DEBUG"] = "Debug mode"
-L["OPT_DEBUG_DESC"] = "Writes a log to the SavedVariables (KickAlertDebugLog). It is saved on /reload or logout."
+L["OPT_DEBUG_DESC"] = "Writes a log to the SavedVariables (KickCallDebugLog). It is saved on /reload or logout."
 L["OPT_DEBUG_CLEAR"] = "Clear log"
 L["DEBUG_COUNT"] = "%d entries in the log."
 L["SOUND_MISSING"] = "%s (missing)"

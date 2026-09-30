@@ -7,8 +7,7 @@
 ## Version: @project-version@
 ## SavedVariables: KickCallDB, KickCallDebugLog
 ## X-License: MIT
-# CurseForge-Projekt-ID folgt (SPEC 8). Zum Aktivieren die Raute am Zeilenanfang entfernen und die ID eintragen:
-# ## X-Curse-Project-ID: 0000000
+## X-Curse-Project-ID: 1719005
 
 embeds.xml
 

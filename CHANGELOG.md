@@ -4,6 +4,7 @@
 
 - Renamed from KickAlert to KickCall (name conflict on CurseForge). Settings from the alpha are not carried over.
 - Short command `/kc` in addition to `/kickcall`.
+- New logo and addon icon.
 
 ## 1.0.0-alpha.1
 

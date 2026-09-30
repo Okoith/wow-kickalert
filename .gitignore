@@ -1,3 +1,4 @@
 libs/
 .release/
 .env
+luac.out

@@ -1,0 +1,33 @@
+# Baut bei jedem Tag v* ein Zip mit allen Bibliotheken und veröffentlicht es als GitHub Release.
+# Vorlage: https://github.com/BigWigsMods/packager/wiki/GitHub-Actions-workflow
+name: Package and release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+# nötig, damit der Packager ein GitHub Release anlegen kann
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    env:
+      # vom Workflow bereitgestellt, muss nicht als Secret angelegt werden
+      GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # CurseForge: Der Packager lädt nur hoch, wenn Token UND Projekt-ID gesetzt sind
+      # (release.sh, upload_curseforge). Ohne Secret ist der Wert leer, dann entsteht
+      # weiterhin nur das GitHub-Release. Einrichtung siehe README, Abschnitt Releases.
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # komplette Historie für das automatische Changelog
+
+      - name: Package and release
+        uses: BigWigsMods/packager@v2

@@ -1,0 +1,24 @@
+# BigWigs Packager, siehe https://github.com/BigWigsMods/packager/wiki/Preparing-the-PackageMeta-File
+package-as: KickAlert
+
+# Quellen wie im Referenzprojekt VoidAlert (dort im Spiel getestet).
+# Kein AceDBOptions-3.0: keine Profilseite (SPEC 5 und 7).
+externals:
+  libs/LibStub:
+    url: https://repos.wowace.com/wow/libstub/trunk
+    tag: 1.0
+  libs/CallbackHandler-1.0: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+  libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+  libs/AceGUI-3.0: https://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
+  libs/AceConfig-3.0: https://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
+  libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
+
+# sounds/ und media/ gehören ins Paket, docs/ nicht (SPEC 7)
+ignore:
+  - docs
+  - CLAUDE.md
+  - SPEC.md
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown

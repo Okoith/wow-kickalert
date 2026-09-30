@@ -1,0 +1,92 @@
+local _, ns = ...
+
+-- Basistabelle (enUS). Fehlende Schlüssel liefern den Schlüssel selbst,
+-- damit nie ein Lua-Fehler durch einen fehlenden Text entsteht.
+local L = setmetatable({}, { __index = function(_, key) return key end })
+ns.L = L
+
+L["LOADED"] = "Version %s loaded. Type /kickalert help for commands."
+L["UNKNOWN_COMMAND"] = "Unknown command. Type /kickalert help for commands."
+L["ON"] = "on"
+L["OFF"] = "off"
+
+L["ALERT_cast"] = "Enemy starts casting"
+L["ALERT_success"] = "Interrupt successful"
+
+L["HELP_HEADER"] = "Commands:"
+L["HELP_OPEN"] = "/kickalert - open the settings"
+L["HELP_HELP"] = "/kickalert help - list the commands"
+L["HELP_TEST"] = "/kickalert test [cast|success] - play both sounds one after the other (or one)"
+L["HELP_STATUS"] = "/kickalert status - show your interrupt and the current settings"
+L["HELP_DEBUG"] = "/kickalert debug on|off|clear|status - debug log"
+
+L["STATUS_HEADER"] = "Version %s"
+L["STATUS_KICK"] = "Your interrupt: %s"
+L["STATUS_KICK_NONE"] = "none found"
+L["STATUS_ALERT"] = "%s: %s, sound: %s"
+L["STATUS_UNITS"] = "Target: %s, focus: %s, nameplates: %s"
+L["STATUS_OPTIONS"] = "Channel: %s, minimum gap: %.1f s, only in combat: %s, only in instances: %s, success also for others: %s, debug mode: %s"
+
+L["TEST_PLAYING"] = "Test: %s - %s"
+
+-- Soundquellen (SPEC 4)
+L["SOUND_CAST_EN"] = "KickAlert: Cast (English)"
+L["SOUND_CAST_DE"] = "KickAlert: Cast (German)"
+L["SOUND_KICK_EN"] = "KickAlert: Kick (English)"
+L["SOUND_KICK_DE"] = "KickAlert: Kick (German)"
+L["SOUND_CUSTOM"] = "Custom: sound%d.ogg"
+L["SOUND_KIT"] = "WoW: %s"
+L["SOUND_LSM"] = "LSM: %s"
+L["KIT_RAID_WARNING"] = "Raid Warning"
+L["KIT_READY_CHECK"] = "Ready Check"
+L["KIT_ALARM_CLOCK_WARNING_2"] = "Alarm Clock 2"
+L["KIT_ALARM_CLOCK_WARNING_3"] = "Alarm Clock 3"
+L["KIT_RAID_BOSS_EMOTE_WARNING"] = "Raid Boss Emote"
+L["KIT_PVP_THROUGH_QUEUE"] = "PvP Queue Ready"
+
+L["CUSTOM_MISSING"] = "%s could not be played. Put the file in %s and restart WoW completely. Also check that the sound channel is not muted."
+L["SOUND_FAILED"] = "%s could not be played. Check that the sound channel is not muted."
+
+L["DEBUG_ON"] = "Debug mode on. The log is saved on /reload or logout."
+L["DEBUG_OFF"] = "Debug mode off."
+L["DEBUG_CLEARED"] = "Debug log cleared."
+L["DEBUG_STATUS"] = "Debug mode: %s, %d entries in the log."
+
+-- Einstellungsmenü (SPEC 5)
+L["OPT_NOTE"] = "The sound plays for every enemy spell cast. The game does not tell addons whether a spell can be interrupted."
+L["OPT_KICK_FOUND"] = "Your interrupt: |cffffd100%s|r"
+L["OPT_KICK_NONE"] = "No interrupt found on this character. The success sound then only plays with \"Also when others interrupt\"."
+L["OPT_ENABLED"] = "Enabled"
+L["OPT_SOUND"] = "Sound"
+L["OPT_TEST"] = "Test"
+L["OPT_UNITS"] = "Units"
+L["UNIT_target"] = "Target"
+L["UNIT_focus"] = "Focus"
+L["UNIT_nameplate"] = "Nameplates"
+L["OPT_NAMEPLATE_DESC"] = "All enemies with a visible nameplate, not only your target and focus. Can be very frequent in large pulls."
+L["OPT_OTHERS"] = "Also when others interrupt"
+L["OPT_OTHERS_DESC"] = "Plays the success sound whenever an enemy spell is interrupted, not only by your own interrupt."
+L["OPT_GENERAL"] = "General"
+L["OPT_CHANNEL"] = "Sound channel"
+L["OPT_CHANNEL_DESC"] = "The sounds follow the volume of this channel in WoW's sound settings."
+L["CHANNEL_Master"] = "Master"
+L["CHANNEL_SFX"] = "Sound effects"
+L["CHANNEL_Dialog"] = "Dialog"
+L["CHANNEL_Music"] = "Music"
+L["CHANNEL_Ambience"] = "Ambience"
+L["OPT_MIN_GAP"] = "Minimum gap (seconds)"
+L["OPT_MIN_GAP_DESC"] = "After a cast sound, further enemy casts are ignored for this time. The same cast is reported for your target and its nameplate at the same moment."
+L["OPT_COMBAT_ONLY"] = "Only in combat"
+L["OPT_COMBAT_ONLY_DESC"] = "Sounds are only played while you are in combat. The test buttons always play."
+L["OPT_INSTANCE_ONLY"] = "Only in instances"
+L["OPT_INSTANCE_ONLY_DESC"] = "Sounds are only played inside instances, for example dungeons and raids. The test buttons always play."
+L["OPT_CHAT"] = "Chat messages"
+L["OPT_CHAT_DESC"] = "Shows the \"loaded\" message on login and a message when testing. Replies to /kickalert commands and error hints are always shown."
+L["OPT_TEST_BOTH"] = "Test both"
+L["OPT_CUSTOM"] = "Custom sounds"
+L["OPT_CUSTOM_NOTE"] = "Put your own files as sound1.ogg to sound5.ogg in\n|cffffd100%s|r\nThis folder is kept when KickAlert is updated. After adding new files, restart WoW completely: /reload does not detect new files."
+L["OPT_DEBUG"] = "Debug mode"
+L["OPT_DEBUG_DESC"] = "Writes a log to the SavedVariables (KickAlertDebugLog). It is saved on /reload or logout."
+L["OPT_DEBUG_CLEAR"] = "Clear log"
+L["DEBUG_COUNT"] = "%d entries in the log."
+L["SOUND_MISSING"] = "%s (missing)"

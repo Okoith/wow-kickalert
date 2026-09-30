@@ -1,0 +1,23 @@
+## Interface: 120100
+## Title: KickAlert
+## Notes: Plays a sound when an enemy starts casting, and optionally when an interrupt succeeds.
+## Notes-deDE: Spielt einen Sound, sobald ein Gegner einen Zauber beginnt, und optional bei erfolgreicher Unterbrechung.
+## IconTexture: Interface\AddOns\KickAlert\media\icon.png
+## Author: Dominique
+## Version: @project-version@
+## SavedVariables: KickAlertDB, KickAlertDebugLog
+## X-License: MIT
+# CurseForge-Projekt-ID folgt (SPEC 8). Zum Aktivieren die Raute am Zeilenanfang entfernen und die ID eintragen:
+# ## X-Curse-Project-ID: 0000000
+
+embeds.xml
+
+Locales\enUS.lua
+Locales\deDE.lua
+
+Debug.lua
+Sounds.lua
+Kicks.lua
+Alerts.lua
+Options.lua
+Core.lua

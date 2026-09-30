@@ -3,8 +3,8 @@ if GetLocale() ~= "deDE" then return end
 local _, ns = ...
 local L = ns.L
 
-L["LOADED"] = "Version %s geladen. Befehle mit /kickalert help."
-L["UNKNOWN_COMMAND"] = "Unbekannter Befehl. Befehle mit /kickalert help."
+L["LOADED"] = "Version %s geladen. Befehle mit /kickcall help."
+L["UNKNOWN_COMMAND"] = "Unbekannter Befehl. Befehle mit /kickcall help."
 L["ON"] = "an"
 L["OFF"] = "aus"
 
@@ -12,11 +12,11 @@ L["ALERT_cast"] = "Gegner beginnt Zauber"
 L["ALERT_success"] = "Unterbrechung erfolgreich"
 
 L["HELP_HEADER"] = "Befehle:"
-L["HELP_OPEN"] = "/kickalert - Einstellungen öffnen"
-L["HELP_HELP"] = "/kickalert help - Befehle auflisten"
-L["HELP_TEST"] = "/kickalert test [cast|success] - beide Sounds nacheinander abspielen (oder einen)"
-L["HELP_STATUS"] = "/kickalert status - zeigt deine Unterbrechung und die Einstellungen"
-L["HELP_DEBUG"] = "/kickalert debug on|off|clear|status - Debug-Log"
+L["HELP_OPEN"] = "/kickcall (oder /kc) - Einstellungen öffnen"
+L["HELP_HELP"] = "/kickcall help - Befehle auflisten"
+L["HELP_TEST"] = "/kickcall test [cast|success] - beide Sounds nacheinander abspielen (oder einen)"
+L["HELP_STATUS"] = "/kickcall status - zeigt deine Unterbrechung und die Einstellungen"
+L["HELP_DEBUG"] = "/kickcall debug on|off|clear|status - Debug-Log"
 
 L["STATUS_HEADER"] = "Version %s"
 L["STATUS_KICK"] = "Deine Unterbrechung: %s"
@@ -27,10 +27,10 @@ L["STATUS_OPTIONS"] = "Kanal: %s, Mindestabstand: %.1f s, nur im Kampf: %s, nur 
 
 L["TEST_PLAYING"] = "Test: %s - %s"
 
-L["SOUND_CAST_EN"] = "KickAlert: Zauber (Englisch)"
-L["SOUND_CAST_DE"] = "KickAlert: Zauber (Deutsch)"
-L["SOUND_KICK_EN"] = "KickAlert: Kick (Englisch)"
-L["SOUND_KICK_DE"] = "KickAlert: Kick (Deutsch)"
+L["SOUND_CAST_EN"] = "KickCall: Zauber (Englisch)"
+L["SOUND_CAST_DE"] = "KickCall: Zauber (Deutsch)"
+L["SOUND_KICK_EN"] = "KickCall: Kick (Englisch)"
+L["SOUND_KICK_DE"] = "KickCall: Kick (Deutsch)"
 L["SOUND_CUSTOM"] = "Eigener Sound: sound%d.ogg"
 L["SOUND_KIT"] = "WoW: %s"
 L["SOUND_LSM"] = "LSM: %s"
@@ -77,12 +77,12 @@ L["OPT_COMBAT_ONLY_DESC"] = "Sounds werden nur im Kampf abgespielt. Die Test-But
 L["OPT_INSTANCE_ONLY"] = "Nur in Instanzen"
 L["OPT_INSTANCE_ONLY_DESC"] = "Sounds werden nur in Instanzen abgespielt, zum Beispiel in Dungeons und Schlachtzügen. Die Test-Buttons spielen immer."
 L["OPT_CHAT"] = "Chat-Meldungen"
-L["OPT_CHAT_DESC"] = "Zeigt die Meldung „geladen“ beim Login und eine Meldung beim Testen. Antworten auf /kickalert-Befehle und Fehlerhinweise erscheinen immer."
+L["OPT_CHAT_DESC"] = "Zeigt die Meldung „geladen“ beim Login und eine Meldung beim Testen. Antworten auf /kickcall-Befehle und Fehlerhinweise erscheinen immer."
 L["OPT_TEST_BOTH"] = "Beide testen"
 L["OPT_CUSTOM"] = "Eigene Sounds"
-L["OPT_CUSTOM_NOTE"] = "Eigene Dateien als sound1.ogg bis sound5.ogg ablegen in\n|cffffd100%s|r\nDieser Ordner bleibt bei Updates von KickAlert erhalten. Nach dem Hinzufügen neuer Dateien WoW komplett neu starten: /reload erkennt neue Dateien nicht."
+L["OPT_CUSTOM_NOTE"] = "Eigene Dateien als sound1.ogg bis sound5.ogg ablegen in\n|cffffd100%s|r\nDieser Ordner bleibt bei Updates von KickCall erhalten. Nach dem Hinzufügen neuer Dateien WoW komplett neu starten: /reload erkennt neue Dateien nicht."
 L["OPT_DEBUG"] = "Debugmodus"
-L["OPT_DEBUG_DESC"] = "Schreibt ein Log in die SavedVariables (KickAlertDebugLog). Es wird bei /reload oder Logout gespeichert."
+L["OPT_DEBUG_DESC"] = "Schreibt ein Log in die SavedVariables (KickCallDebugLog). Es wird bei /reload oder Logout gespeichert."
 L["OPT_DEBUG_CLEAR"] = "Log leeren"
 L["DEBUG_COUNT"] = "%d Einträge im Log."
 L["SOUND_MISSING"] = "%s (fehlt)"

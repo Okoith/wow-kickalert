@@ -26,7 +26,7 @@ ns.defaults = {
 }
 
 local function Print(msg)
-  print("|cffff8000KickAlert|r: " .. msg)
+  print("|cffff8000KickCall|r: " .. msg)
 end
 ns.Print = Print
 
@@ -45,7 +45,7 @@ function handlers.ADDON_LOADED(name)
 
   -- Ein gemeinsames Profil "Default" für den ganzen Account (SPEC 5). AceDB-3.0 setzt bei
   -- defaultProfile == true den Namen "Default" (AceDB-3.0.lua, initdb).
-  ns.db = LibStub("AceDB-3.0"):New("KickAlertDB", ns.defaults, true)
+  ns.db = LibStub("AceDB-3.0"):New("KickCallDB", ns.defaults, true)
   -- Slider-Wert absichern (0,2 bis 2,0 s, eine Nachkommastelle)
   ns.db.profile.minGap = ns.Options.RoundGap(ns.db.profile.minGap)
   ns.Debug:Init()
@@ -152,7 +152,7 @@ do
 end
 
 ---------------------------------------------------------------------------
--- Slash-Befehle. /kickalert ohne Argument öffnet das Menü (SPEC 5).
+-- Slash-Befehle. /kickcall ohne Argument öffnet das Menü (SPEC 5).
 ---------------------------------------------------------------------------
 
 local ALERTS = { cast = true, success = true }
@@ -208,8 +208,10 @@ function commands.debug(arg)
   end
 end
 
-SLASH_KICKALERT1 = "/kickalert"
-SlashCmdList.KICKALERT = function(msg)
+SLASH_KICKCALL1 = "/kickcall"
+-- Kurzform. In den GlobalStrings aller Sprachen (12.1.0) nicht von Blizzard belegt.
+SLASH_KICKCALL2 = "/kc"
+SlashCmdList.KICKCALL = function(msg)
   if not ns.db or not ns.loggedIn then return end
   local cmd, arg = strtrim(msg or ""):match("^(%S*)%s*(.-)$")
   cmd = cmd:lower()

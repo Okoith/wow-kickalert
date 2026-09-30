@@ -1,6 +1,6 @@
 local ADDON_NAME, ns = ...
 
--- Debug-Log in der SavedVariable KickAlertDebugLog (Ringpuffer), übernommen aus VoidAlert.
+-- Debug-Log in der SavedVariable KickCallDebugLog (Ringpuffer), übernommen aus VoidAlert.
 -- Regel: Secret Values werden nie gespeichert, nur als "<SECRET>" markiert (SPEC 6).
 
 local Debug = {}
@@ -25,8 +25,8 @@ end
 Debug.S = S
 
 function Debug:Init()
-  if type(KickAlertDebugLog) ~= "table" then KickAlertDebugLog = {} end
-  local log = KickAlertDebugLog
+  if type(KickCallDebugLog) ~= "table" then KickCallDebugLog = {} end
+  local log = KickCallDebugLog
   if type(log.entries) ~= "table" then log.entries = {} end
   log.logins = (tonumber(log.logins) or 0) + 1
   loginNo = log.logins
@@ -43,19 +43,19 @@ function Debug:SetEnabled(enabled)
 end
 
 function Debug:Count()
-  local log = KickAlertDebugLog
+  local log = KickCallDebugLog
   return (log and log.entries) and #log.entries or 0
 end
 
 function Debug:Clear()
-  local log = KickAlertDebugLog
+  local log = KickCallDebugLog
   if log and log.entries then wipe(log.entries) end
 end
 
 -- data: flache Tabelle mit festen String-Schlüsseln; jeder Wert wird mit S() bereinigt.
 function Debug:Add(kind, data)
   if not self:IsEnabled() then return end
-  local log = KickAlertDebugLog
+  local log = KickCallDebugLog
   if not log or not log.entries then return end
 
   local entry = {}

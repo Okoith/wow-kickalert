@@ -1,6 +1,6 @@
-# CLAUDE.md – Arbeitsanweisung für KickAlert
+# CLAUDE.md – Arbeitsanweisung für KickCall
 
-Du baust das WoW-Addon **KickAlert** (Retail 12.1.0, Interface `120100`). Die fachliche Beschreibung steht in `SPEC.md`. Lies sie vollständig, bevor du Code schreibst.
+Du baust das WoW-Addon **KickCall** (Retail 12.1.0, Interface `120100`). Die fachliche Beschreibung steht in `SPEC.md`. Lies sie vollständig, bevor du Code schreibst.
 
 ## Rollen
 

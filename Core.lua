@@ -11,7 +11,8 @@ ns.VERSION = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetada
 -- Sprachansagen ab (Sounds.lua, SPEC 4).
 ns.defaults = {
   profile = {
-    cast = { enabled = true, sound = ns.Sounds.DEFAULTS.cast },
+    -- readyOnly: nur abspielen, wenn die eigene Unterbrechung keine Abklingzeit hat (Kicks:ReadyState)
+    cast = { enabled = true, sound = ns.Sounds.DEFAULTS.cast, readyOnly = false },
     success = { enabled = true, sound = ns.Sounds.DEFAULTS.success, others = false },
     units = { target = true, focus = true, nameplate = false },
     channel = "Master",
@@ -183,6 +184,19 @@ function commands.status()
   local p = ns.db.profile
   Print(L["STATUS_HEADER"]:format(ns.VERSION))
   print("  " .. L["STATUS_KICK"]:format(ns.Kicks:Describe() or L["STATUS_KICK_NONE"]))
+  -- Bereitschaft wie bei der Option "Nur wenn meine Unterbrechung bereit ist"
+  local _, state = ns.Kicks:ReadyState()
+  local ready
+  if state == "ready" then
+    ready = L["READY_YES"]
+  elseif state == "gcd" then
+    ready = L["READY_GCD"]
+  elseif state == "cooldown" then
+    ready = L["READY_NO"]
+  else
+    ready = L["READY_UNKNOWN"]:format(state)
+  end
+  print("  " .. L["STATUS_READY"]:format(ready, onOff(p.cast.readyOnly)))
   print("  " .. L["STATUS_ALERT"]:format(L["ALERT_cast"], onOff(p.cast.enabled), ns.Sounds:Label(p.cast.sound)))
   print("  " .. L["STATUS_ALERT"]:format(L["ALERT_success"], onOff(p.success.enabled), ns.Sounds:Label(p.success.sound)))
   print("  " .. L["STATUS_UNITS"]:format(onOff(p.units.target), onOff(p.units.focus), onOff(p.units.nameplate)))

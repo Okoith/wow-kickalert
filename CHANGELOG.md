@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-beta.2
+
+- New option **Only when my interrupt is ready** under *Enemy starts casting* (off by default): the cast sound only plays while your interrupt is not on cooldown. The global cooldown alone does not count. If KickCall cannot tell, the sound plays.
+- `/kickcall status` shows whether your interrupt is ready right now.
+
 ## 1.0.0-beta.1
 
 - Renamed from KickAlert to KickCall (name conflict on CurseForge). Settings from the alpha are not carried over.

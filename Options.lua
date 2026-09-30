@@ -115,6 +115,10 @@ local function buildOptions()
             type = "execute", order = 3, name = L["OPT_TEST"],
             func = function() ns.Alerts:Test("cast") end,
           },
+          readyOnly = {
+            type = "toggle", order = 4, name = L["OPT_READY_ONLY"], desc = L["OPT_READY_ONLY_DESC"], width = "full",
+            arg = { "cast", "readyOnly" }, get = get, set = set,
+          },
         },
       },
 

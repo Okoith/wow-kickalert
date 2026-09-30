@@ -11,6 +11,7 @@ Sound only, nothing is shown on the screen.
 ## Features
 
 - **Cast sound** when an enemy you have targeted or focused starts casting or channeling (optionally also every enemy with a visible nameplate)
+- **Only when my interrupt is ready** (off by default): the cast sound only plays while your interrupt is not on cooldown
 - **Success sound** when your own interrupt stopped an enemy cast (optionally also when someone else interrupts)
 - **Bundled voice alerts** in English and German; the default follows your client language. If a voice file is missing, the defaults are the WoW sounds *Raid Warning* (cast) and *Ready Check* (success).
 - **Your own sounds:** up to five files in a separate folder that survives addon updates
@@ -37,7 +38,7 @@ The zip contains all required libraries. A plain copy of the repository does **n
 Type `/kickcall` or open *Settings > AddOns > KickCall*. Changes apply immediately.
 
 - **At the top:** the note that the sound plays for every enemy cast, and the interrupt KickCall found on your character.
-- **Enemy starts casting:** on/off, sound, *Test* button.
+- **Enemy starts casting:** on/off, sound, *Test* button, *Only when my interrupt is ready* (off).
 - **Units:** target (on), focus (on), nameplates (off).
 - **Interrupt successful:** on/off, sound, *Test* button, *Also when others interrupt* (off).
 - **General:** sound channel, minimum gap, only in combat, only in instances, chat messages, *Test both* button.
@@ -55,7 +56,7 @@ The sound list contains, in this order: the bundled KickCall voice alerts (only 
 | `/kickcall` or `/kc` | Open the settings |
 | `/kickcall help` | List the commands |
 | `/kickcall test [cast\|success]` | Play both sounds one after the other (or only one) |
-| `/kickcall status` | Show your interrupt and the current settings |
+| `/kickcall status` | Show your interrupt, whether it is ready right now, and the current settings |
 | `/kickcall debug on\|off\|clear\|status` | Debug log (`KickCallDebugLog` in SavedVariables, off by default) |
 
 ### Your own sounds
@@ -72,6 +73,8 @@ The folder is separate from the `KickCall` folder, so updates do not touch your 
 The detection was worked out in game with a test addon (`docs/reference/InterruptTest.lua`).
 
 **Cast sound:** KickCall listens to `UNIT_SPELLCAST_START`, `UNIT_SPELLCAST_CHANNEL_START` and `UNIT_SPELLCAST_EMPOWER_START` for `target`, `focus` and the nameplates. The unit must be attackable (`UnitCanAttack`). Spell ID, spell name and whether the spell can be interrupted are hidden from addons in combat, so they are not used. The same cast is reported for your target and its nameplate at the same moment; after a sound, further casts are ignored for the minimum gap.
+
+**Only when my interrupt is ready:** the cooldown's start time and duration are hidden from addons in combat, but `C_Spell.GetSpellCooldown` still tells whether a cooldown is active (`isActive`) and whether it is only the global cooldown (`isOnGCD`). Both stay readable in combat (tested with Rebuke, documented as never secret). With the option on, the cast sound only plays when at least one of your interrupts is ready; the global cooldown alone does not count as "not ready". If KickCall cannot tell (no interrupt found, value hidden, error), the sound plays.
 
 **Success sound:** when you cast your interrupt (`UNIT_SPELLCAST_SUCCEEDED` for yourself with a known interrupt spell ID) and an enemy's cast is interrupted (`UNIT_SPELLCAST_INTERRUPTED`) within 1 second, the success sound plays. The success sound has its own 0.5-second block.
 

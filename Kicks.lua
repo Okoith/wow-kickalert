@@ -89,6 +89,57 @@ function Kicks:Describe()
   return table.concat(parts, ", ")
 end
 
+---------------------------------------------------------------------------
+-- Bereitschaft (Option "Nur wenn meine Unterbrechung bereit ist")
+-- C_Spell.GetSpellCooldown: isActive und isOnGCD sind laut SpellSharedDocumentation.lua
+-- (wow-ui-source 12.1.0.69933) NeverSecret und im Kampf lesbar (SPEC 2, Test Paladin 96231).
+-- startTime und duration bleiben geheim und werden nicht angefasst.
+-- Im Zweifel gilt die Unterbrechung als bereit (fail-open), damit kein Sound verloren geht.
+---------------------------------------------------------------------------
+
+-- Zustand einer Unterbrechung: "ready", "gcd", "cooldown" oder ein Grund, warum der Zustand
+-- nicht lesbar ist ("cdApiMissing", "cdError", "cdNil", "cdSecret", "cdNoActive").
+-- Dazu isActive und isOnGCD fürs Debug-Log (Debug:Add markiert geheime Werte als "<SECRET>").
+local function cooldownState(id)
+  if not (C_Spell and C_Spell.GetSpellCooldown) then return "cdApiMissing" end
+  local ok, info = pcall(C_Spell.GetSpellCooldown, id)
+  if not ok then
+    ns.Debug:Error("GetSpellCooldown", info)
+    return "cdError"
+  end
+  if issecret(info) then return "cdSecret" end
+  -- "Returns nil if spell is not found" (SpellDocumentation.lua), z. B. Zauber des Begleiters
+  if type(info) ~= "table" then return "cdNil" end
+  local isActive, isOnGCD = info.isActive, info.isOnGCD
+  if issecret(isActive) or issecret(isOnGCD) then return "cdSecret", isActive, isOnGCD end
+  if isActive == false then return "ready", isActive, isOnGCD end
+  -- Nur die globale Abklingzeit zählt nicht als "nicht bereit"
+  if isOnGCD == true then return "gcd", isActive, isOnGCD end
+  if isActive == true then return "cooldown", isActive, isOnGCD end
+  return "cdNoActive", isActive, isOnGCD
+end
+
+-- Rückgabe: ready, state, kickID, isActive, isOnGCD (ohne Tabelle, SPEC 7).
+-- Mehrere Unterbrechungen (z. B. Hexenmeister mit Begleiter): bereit, sobald eine bereit ist.
+-- Nicht bereit nur, wenn keine bereit ist und alle lesbar auf Abklingzeit sind.
+function Kicks:ReadyState()
+  if #self.known == 0 then return true, "kickUnknown" end
+  local failState, failID, failActive, failGCD
+  local cdID, cdActive, cdGCD
+  for _, id in ipairs(self.known) do
+    local state, isActive, isOnGCD = cooldownState(id)
+    if state == "ready" or state == "gcd" then
+      return true, state, id, isActive, isOnGCD
+    elseif state == "cooldown" then
+      if not cdID then cdID, cdActive, cdGCD = id, isActive, isOnGCD end
+    elseif not failState then
+      failState, failID, failActive, failGCD = state, id, isActive, isOnGCD
+    end
+  end
+  if failState then return true, failState, failID, failActive, failGCD end
+  return false, "cooldown", cdID, cdActive, cdGCD
+end
+
 function Kicks:Log(why)
   if not ns.Debug:IsEnabled() then return end
   local specID, specName = ns.Debug:GetSpec()

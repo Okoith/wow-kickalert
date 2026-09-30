@@ -18,7 +18,8 @@ KickCall spielt einen Sound, sobald ein Gegner einen Zauber beginnt, damit man r
 | `UnitName` des Gegners | geheim | nicht verwenden |
 | `UNIT_SPELLCAST_INTERRUPTED` für Gegner | kommt, Unit-Token lesbar | Auslöser für „Erfolg“ |
 | `UNIT_SPELLCAST_SUCCEEDED` für `player` | Spell-ID lesbar (eigene Unterbrechung erkannt) | eigene Unterbrechung erkennen |
-| Abklingzeit der eigenen Unterbrechung (`C_Spell.GetSpellCooldown`) | im Kampf geheim | „nur wenn Kick bereit“ **nicht möglich** |
+| Abklingzeit der eigenen Unterbrechung (`C_Spell.GetSpellCooldown`): `startTime`, `duration` | im Kampf geheim | nicht verwenden |
+| `C_Spell.GetSpellCooldown(id)`: `isActive`, `isOnGCD` (Paladin 96231, im Kampf an der Übungspuppe) | lesbar: bereit → `isActive = false`, `isOnGCD = nil`; Abklingzeit → `isActive = true`, `isOnGCD = false`. Laut `SpellSharedDocumentation.lua` (12.1.0) `NeverSecret` | Option „Nur wenn meine Unterbrechung bereit ist“ (3.1) |
 | `C_Spell.IsSpellUsable` der Unterbrechung | `true` auch während der Abklingzeit | nicht verwenden |
 | `frame:SetShown(secret)` | Fehler: nur bei untainted Ausführung erlaubt | – |
 | Derselbe Zauber | kommt gleichzeitig als `target` und `nameplateN` (gleicher Zeitstempel) | Doppelsperre nötig |
@@ -34,6 +35,7 @@ Blizzard bietet mit „Audio Assist“ eine eigene Ansage für unterbrechbare Za
 - Unit prüfen: `issecretvalue(unit)` → ignorieren; sonst nur `target`, `focus`, `nameplate%d+`, je nach Einstellung
 - Nur Gegner: `UnitCanAttack("player", unit)` in `pcall`, nur wenn lesbar und `true`
 - Doppelsperre: nach einem Sound werden weitere Zauberbeginne für die eingestellte Dauer ignoriert (Standard 0,5 s)
+- Option „Nur wenn meine Unterbrechung bereit ist“ (Standard aus), nach allen anderen Filtern: `C_Spell.GetSpellCooldown` für jede bekannte Unterbrechung (3.3) in `pcall`. Bereit, wenn `isActive == false` oder `isOnGCD == true`; nicht bereit, wenn `isActive == true` und `isOnGCD ~= true` → kein Sound, Grund `kickOnCooldown`. Mehrere Unterbrechungen: bereit, sobald eine bereit ist. Im Zweifel abspielen (keine Unterbrechung bekannt, Fehler, `nil`, geheimer Wert, `isActive` fehlt) und den Grund loggen. Die Doppelsperre gilt nur nach einem gespielten Sound.
 - Keine Unterscheidung nach unterbrechbar/nicht unterbrechbar (geheim). In README und Menü klar sagen: „Der Sound kommt bei jedem gegnerischen Zauber.“
 
 ### 3.2 Erfolg
@@ -60,7 +62,7 @@ Abspielen mit `PlaySoundFile` / `PlaySound` in `pcall`, Kanal wählbar.
 
 ## 5. Einstellungen (AceConfig, Einstellungen → AddOns → KickCall)
 
-- **Zauberbeginn:** an/aus, Sound, Testen
+- **Zauberbeginn:** an/aus, Sound, Testen, „Nur wenn meine Unterbrechung bereit ist“ (aus)
 - **Einheiten:** Ziel (an), Fokus (an), Namensplaketten (aus)
 - **Erfolg:** an/aus (an), Sound, Testen, „auch bei Unterbrechung durch andere“ (aus)
 - **Allgemein:**
@@ -77,7 +79,7 @@ Abspielen mit `PlaySoundFile` / `PlaySound` in `pcall`, Kanal wählbar.
 
 ## 6. Debugmodus
 
-Wie VoidAlert: Ringpuffer in `KickCallDebugLog`, max. 5000 Einträge, Secret Values nur als `"<SECRET>"`. Inhalt: Version, Build, Klasse, Spec, gefundene Unterbrechung, jeder Zauberbeginn (Event, Unit, lesbar/geheim, Entscheidung, Grund bei Nicht-Auslösen), jede eigene Unterbrechung, jedes `INTERRUPTED` mit Abstand zur eigenen Unterbrechung, jeder Sound mit Quelle und Rückgabe.
+Wie VoidAlert: Ringpuffer in `KickCallDebugLog`, max. 5000 Einträge, Secret Values nur als `"<SECRET>"`. Inhalt: Version, Build, Klasse, Spec, gefundene Unterbrechung, jeder Zauberbeginn (Event, Unit, lesbar/geheim, Entscheidung, Grund bei Nicht-Auslösen; mit der Bereitschafts-Option zusätzlich `kickCheck`, `kickID`, `isActive`, `isOnGCD`), jede eigene Unterbrechung, jedes `INTERRUPTED` mit Abstand zur eigenen Unterbrechung, jeder Sound mit Quelle und Rückgabe.
 
 ## 7. Technik
 

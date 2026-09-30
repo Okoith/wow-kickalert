@@ -5,7 +5,9 @@ local L = ns.L
 --   UNIT_SPELLCAST_START / _CHANNEL_START / _EMPOWER_START  -> Sound "Zauberbeginn"
 --   UNIT_SPELLCAST_SUCCEEDED (player, Spell-ID aus Kicks.SET) -> eigene Unterbrechung merken
 --   UNIT_SPELLCAST_INTERRUPTED                                -> Sound "Erfolg"
--- Keine Filter über geheime Werte (Spell-ID, Name, notInterruptible, Abklingzeit).
+-- Keine Filter über geheime Werte (Spell-ID, Name, notInterruptible, startTime/duration der
+-- Abklingzeit). Die Option "Nur wenn meine Unterbrechung bereit ist" nutzt nur isActive und
+-- isOnGCD, die lesbar sind (SPEC 2, Kicks:ReadyState).
 
 local Alerts = {}
 ns.Alerts = Alerts
@@ -142,20 +144,33 @@ function Alerts:OnCastStart(event, unit)
   if not reason then
     reason = notHostileReason(unit)
   end
+  -- Nach allen anderen Filtern: Abklingzeit der eigenen Unterbrechung. Im Zweifel abspielen;
+  -- kickCheck nennt dann den Grund (kickUnknown, cdSecret, cdError, ...).
+  local kickCheck, kickID, isActive, isOnGCD
+  if not reason and p.cast.readyOnly then
+    local ready
+    ready, kickCheck, kickID, isActive, isOnGCD = ns.Kicks:ReadyState()
+    if not ready then reason = "kickOnCooldown" end
+  end
 
   if reason then
     if ns.Debug:IsEnabled() then
       ns.Debug:Add("cast", {
         event = event, unit = unit, decision = "skip", reason = reason,
         sinceLast = lastCast and round2(now - lastCast),
+        kickCheck = kickCheck, kickID = kickID, isActive = isActive, isOnGCD = isOnGCD,
       })
     end
     return
   end
 
+  -- Doppelsperre erst hier, also nur wenn wirklich ein Sound gespielt wird
   lastCast = now
   if ns.Debug:IsEnabled() then
-    ns.Debug:Add("cast", { event = event, unit = unit, decision = "play" })
+    ns.Debug:Add("cast", {
+      event = event, unit = unit, decision = "play",
+      kickCheck = kickCheck, kickID = kickID, isActive = isActive, isOnGCD = isOnGCD,
+    })
   end
   self:Play("cast", event)
 end
